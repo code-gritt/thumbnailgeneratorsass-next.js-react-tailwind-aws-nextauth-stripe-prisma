@@ -21,7 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { toast } from "~/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { signup } from "~/app/actions/auth";
+  import { signup } from "~/app/actions/auth";
 
 type FormValues = z.infer<typeof signInSchema>;
 
