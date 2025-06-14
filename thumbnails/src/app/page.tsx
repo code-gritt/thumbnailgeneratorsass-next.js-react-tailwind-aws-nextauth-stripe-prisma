@@ -1,37 +1,73 @@
-import Link from "next/link";
+"use server";
 
-export default function HomePage() {
+// import { getServerSession } from "next-auth";
+import Link from "next/link";
+import { Button } from "~/components/ui/button";
+// import { authOptions } from "~/server/auth";
+import Image from "next/image";
+import PricingCard from "~/components/pricing-card";
+
+export default async function HomePage() {
+  // const user = await getServerSession(authOptions);
+  const user = null as { user: any } | null;
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <div className="flex h-screen flex-col items-center overflow-y-scroll px-6 py-6">
+      <nav className="flex w-full items-center justify-between pb-6 md:px-8">
+        <Link href="/" className="text-lg leading-7 font-semibold">
+          Thumbnails
+        </Link>
+        <div className="flex items-center">
+          {user?.user ? (
+            <Button>
+              <Link href="/dashboard">Go to dashboard</Link>
+            </Button>
+          ) : (
+            <Button>
+              <Link href="/signin">Sign In</Link>
+            </Button>
+          )}
+        </div>
+      </nav>
+      <div className="mt-2 flex flex-col gap-20 md:mt-14">
+        <div className="flex flex-col gap-1 md:flex-row md:items-center md:gap-10">
+          <div className="flex max-w-2xl flex-col gap-1 md:w-1/2">
+            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+              Easier thumnails <br /> for creators
+            </h1>
+            <p className="text-muted-foreground mt-4 text-lg">
+              Thumbnails with text behind the foreground are popular, but takes
+              time to make manually. Generate them automatically with this tool.
+            </p>
+            {user?.user ? (
+              <Button className="mt-6 w-full md:w-fit">
+                <Link href="/dashboard">Go to dashboard</Link>
+              </Button>
+            ) : (
+              <Button className="mt-6 w-full md:w-fit">
+                <Link href="/signup">Get a Free Thumbnail</Link>
+              </Button>
+            )}
+          </div>
+          <Image
+            className="mt-6 max-w-full rounded-lg shadow-md md:w-1/2 md:max-w-xl"
+            src="/demo.png"
+            width={800}
+            height={800}
+            loading="eager"
+            alt={"Demo"}
+          />
+        </div>
+        <div className="flex flex-col items-center gap-6">
+          <h2 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-3xl">
+            Pricing
+          </h2>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <PricingCard pricing="$2" credits="10" />
+            <PricingCard pricing="$5" credits="25" />
+            <PricingCard pricing="$10" credits="100" />
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
