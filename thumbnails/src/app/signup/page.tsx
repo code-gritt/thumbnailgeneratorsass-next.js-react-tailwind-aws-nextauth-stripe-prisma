@@ -1,16 +1,16 @@
 "use server";
 
-// import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Signup from "~/components/ui/signup";
-// import { authOptions } from "~/server/auth";
+import { authOptions } from "~/server/auth";
 
 const Page = async () => {
-  // const serverSession = await getServerSession(authOptions);
+  const serverSession = await getServerSession(authOptions);
 
-  // if (serverSession?.user) {
-  redirect("/dashboard");
-  // }
+  if (serverSession?.user) {
+    redirect("/dashboard");
+  }
 
   return (
     <>

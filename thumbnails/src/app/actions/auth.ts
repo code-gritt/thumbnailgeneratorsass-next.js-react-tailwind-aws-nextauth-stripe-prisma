@@ -37,13 +37,13 @@ export const signup = async (email: string, password: string) => {
   // });
 
   // Create the user
-  // await db.user.create({
-  //   data: {
-  //     email: isValid.data.email,
-  //     password: hash,
-  //     stripeCustomerId: stripeCustomer.id,
-  //   },
-  // });
+  await db.user.create({
+    data: {
+      email: isValid.data.email,
+      password: hash,
+      // stripeCustomerId: stripeCustomer.id,
+    },
+  });
 
   // Redirect the user to signin, if is registered
   redirect("/signin");
